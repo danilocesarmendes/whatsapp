@@ -12,7 +12,7 @@
 * Saiba mais sobre o [selenium] (https://www.seleniumhq.org/)
 
 ### Requisitos de instalação ###
-* [JDK] 8+ (https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+* [JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 * [Maven](http://maven.apache.org/)
 * [ChromeDriver](https://chromedriver.chromium.org/getting-started)
 
@@ -22,3 +22,7 @@
 * mvn clean
 * mvn install -DskipTests
 * java -jar target/whatsapp-0.0.1-SNAPSHOT.jar
+
+## Contato ##
+[LinkedIn](https://www.linkedin.com/in/danilo-cesar-mendes/)
+[WhatsApp](https://api.whatsapp.com/send?phone=5516991001800)
