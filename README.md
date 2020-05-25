@@ -24,5 +24,5 @@
 * java -jar target/whatsapp-0.0.1-SNAPSHOT.jar
 
 ## Contato ##
-[LinkedIn](https://www.linkedin.com/in/danilo-cesar-mendes/)
-[WhatsApp](https://api.whatsapp.com/send?phone=5516991001800)
+- [LinkedIn](https://www.linkedin.com/in/danilo-cesar-mendes/)
+- [WhatsApp](https://api.whatsapp.com/send?phone=5516991001800)
