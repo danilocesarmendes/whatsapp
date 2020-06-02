@@ -41,7 +41,7 @@ public class SendWhatsAppTest {
 		this.init();
 
 		// iniciando o driver de conexão com o navegador (O whatsapp deve está logado com QrCode)
-		this.startDriverGoogleChrome(null, true, false, "127.0.0.1:9222", null);
+		this.startDriverGoogleChrome(true, false, "127.0.0.1:9222");
 		
 		// abre a url informando a timeout
 		this.open(60);
@@ -148,28 +148,20 @@ public class SendWhatsAppTest {
 		(new WebDriverWait(driver, timeout)).until(ExpectedConditions.presenceOfElementLocated(By.id("side")));
 	}
 	
-	public void startDriverGoogleChrome(String pathUserChrome, boolean useOptions, boolean browserOcult, String existent,
-			String setBinary) {
-		String extensao = "";
-		String pathChrome = "";
+	public void startDriverGoogleChrome(boolean useOptions, boolean browserOcult, String existent) {
+		String extension = "";
 		if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-			extensao = ".exe";
+			extension = ".exe";
 		}
 
 		System.setProperty("webdriver.chrome.driver", System.getProperty("user.home") + File.separator + "driver"
-				+ File.separator + "chromedriver" + extensao);
-
-		pathChrome = System.getProperty("user.home") + File.separator + "driver" + File.separator + "profiles";
+				+ File.separator + "chromedriver" + extension);
 
 		ChromeOptions options = new ChromeOptions();
 		options.setAcceptInsecureCerts(true);
 
 		if (useOptions) {
 			
-
-			if (pathUserChrome != null && !pathUserChrome.isEmpty()) {
-				options.addArguments("--user-data-dir=" + pathChrome + File.separator + pathUserChrome);
-			}
 			options.addArguments("--no-sandbox");
 			options.addArguments("--disable-dev-shm-usage");
 			options.addArguments("--disable-gpu");
@@ -189,12 +181,7 @@ public class SendWhatsAppTest {
 				driver.switchTo().window(handle);
 			}
 
-		} else if (!(setBinary == null)) {
-			options.setBinary(setBinary);
-			driver = new ChromeDriver(options);
-		} else {
-			driver = new ChromeDriver(options);
-		}
+		} 
 		driver.manage().window().maximize();
 
 	}
