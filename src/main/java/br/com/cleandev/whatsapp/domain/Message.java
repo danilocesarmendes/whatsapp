@@ -9,7 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.sun.istack.NotNull;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,11 +35,13 @@ public class Message implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotNull
-	private String menssage;
+	@NotNull(message = "O campo text para envio de mensagem não pode ser null")
+	@NotBlank(message = "O campo text para envio de mensagem não pode ser vazio")
+	private String text;
 
-	@NotNull
-	private String sendPhone;
+	@NotNull(message = "O campo phone não pode ser null")
+	@NotBlank(message = "O campo phone não pode ser vazio")
+	private String phone;
 
 	@NotNull
 	private Date createdAt;
