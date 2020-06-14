@@ -102,7 +102,7 @@ public class SendWhatsAppTest {
 		System.out.println("numero valido ? " + numeroValido);
 		if (numeroValido) {
 			(new WebDriverWait(driver, 120)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@contenteditable='true']")));
-			WebElement buttonElem = driver.findElement(By.className("_35EW6"));
+			WebElement buttonElem = driver.findElement(By.className("_1U1xa"));
 			if (buttonElem != null) {
 				buttonElem.click();
 			}
