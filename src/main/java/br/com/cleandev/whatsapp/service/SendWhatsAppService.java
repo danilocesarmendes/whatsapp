@@ -42,7 +42,7 @@ public class SendWhatsAppService {
 
 					message.setShippingDate(new Date());
 					messageRepository.saveAndFlush(message);
-					whatsApp.close();
+//					whatsApp.close();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
