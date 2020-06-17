@@ -14,13 +14,13 @@ import br.com.cleandev.whatsapp.service.MessageService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "v1/api")
+@RequestMapping(value = "/message")
 public class MessageController {
 
 	@Autowired
 	private MessageService messageService;
 
-	@PostMapping("/message")
+	@PostMapping("")
 	public ResponseEntity<Void> createMessageOfWhatsAppInQueeue(@RequestBody Message message) {
 
 		try {
