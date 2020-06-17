@@ -67,7 +67,8 @@ public class WhatsAppEngine {
 		boolean numeroValido = true;
 		try {
 			(new WebDriverWait(driver, 120))
-					.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@contenteditable='true']")));
+					.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@contenteditable='true']"))
+			);
 		} catch (Exception e) {
 			driver.findElement(By.xpath(
 					"(.//*[normalize-space(text()) and normalize-space(.)='O número de telefone compartilhado através de url é inválido.'])[1]/following::div[2]"))
