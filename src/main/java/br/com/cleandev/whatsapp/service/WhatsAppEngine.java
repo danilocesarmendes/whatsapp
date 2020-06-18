@@ -1,6 +1,8 @@
 package br.com.cleandev.whatsapp.service;
 
+import java.awt.AWTException;
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
@@ -19,7 +21,7 @@ public class WhatsAppEngine {
 
 	private WebDriver driver;
 	private final String urlWhatsApp = "https://web.whatsapp.com/";
-	private final String urlAPIWhatsApp  = "https://api.whatsapp.com/send?";
+	private final String urlAPIWhatsApp = "https://api.whatsapp.com/send?";
 
 	public WhatsAppEngine() {
 
@@ -67,8 +69,7 @@ public class WhatsAppEngine {
 		boolean numeroValido = true;
 		try {
 			(new WebDriverWait(driver, 120))
-					.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@contenteditable='true']"))
-			);
+					.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@contenteditable='true']")));
 		} catch (Exception e) {
 			driver.findElement(By.xpath(
 					"(.//*[normalize-space(text()) and normalize-space(.)='O número de telefone compartilhado através de url é inválido.'])[1]/following::div[2]"))
@@ -97,6 +98,83 @@ public class WhatsAppEngine {
 			}
 
 			this.sleep(5000);
+		}
+	}
+
+	public void sendFileToNewNumber(String telNumber, String pathFile) throws InterruptedException, AWTException {
+		if (telNumber != null && !telNumber.startsWith("55")) {
+			telNumber = "55" + telNumber;
+		}
+		driver.get(urlAPIWhatsApp + "phone=" + telNumber);
+		if (this.isAlertPresent()) {
+			this.alertAccept();
+		}
+
+		this.executeScript("document.getElementById('action-button').click();");
+
+		try {
+			this.sleep(1000);
+			WebElement link = driver.findElement(By.linkText("use o WhatsApp Web"));
+			link.click();
+			this.sleep(5000);
+		} catch (NoSuchElementException e1) {
+			WebElement link = driver.findElement(By.linkText("use WhatsApp Web"));
+			link.click();
+			e1.printStackTrace();
+		}
+
+		// verifica se o numero é valido
+		boolean numeroValido = true;
+		try {
+			(new WebDriverWait(driver, 120))
+					.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@contenteditable='true']")));
+		} catch (Exception e) {
+			driver.findElement(By.xpath(
+					"(.//*[normalize-space(text()) and normalize-space(.)='O número de telefone compartilhado através de url é inválido.'])[1]/following::div[2]"))
+					.click();
+			numeroValido = false;
+		}
+
+		try {
+			WebElement numeroInvalido = driver.findElement(By.className("_3lLzD"));
+			if (numeroInvalido != null && numeroInvalido.getText() != null && numeroInvalido.getText()
+					.contains("O número de telefone compartilhado através de url é inválido")) {
+				numeroValido = false;
+				this.executeScript("document.getElementsByClassName('_1WZqU PNlAR')[0].click();");
+			}
+		} catch (NoSuchElementException e) {
+			System.out.println("elemento _2Vo52 não encontrado");
+		}
+
+		System.out.println("numero valido ? " + numeroValido);
+		if (numeroValido) {
+			(new WebDriverWait(driver, 60))
+			.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@contenteditable='true']")));
+			
+			WebElement buttonElem = driver.findElement(By.xpath("//div[@id='main']/header/div[3]/div/div[2]/div/span"));
+			if (buttonElem != null) {
+				buttonElem.click();
+			}
+
+			Thread.sleep(2000);
+
+			List<WebElement> list = driver.findElements(By.xpath("//input[@accept='image/*,video/mp4,video/3gpp,video/quicktime']"));
+
+			if (list != null) {
+				System.out.println("Enviando Audio...");
+				WebElement inputFile = list.get(0);
+				inputFile.sendKeys(pathFile);
+				Thread.sleep(2000);
+
+				// Button Enviar
+				List<WebElement> listButton = driver.findElements(By.xpath("//span[@data-icon='send']"));
+				if (listButton != null) {
+					listButton.get(0).click();
+				}
+
+			}
+
+			this.sleep(1000);
 		}
 	}
 
